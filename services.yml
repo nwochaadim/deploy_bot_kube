@@ -4,8 +4,9 @@ metadata:
   name: deploybot-service
 spec:
   selector:
-    app: deploybot
+    app: deploybot-containers
   ports:
     - protocol: TCP
       port: 80
       targetPort: 1323
+  type: LoadBalancer

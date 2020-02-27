@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploybot-deployment
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: nwochaadim/deploybot:latest
+        image: gcr.io/deploy-bot-268709/deploybot:1.11
         ports:
         - containerPort: 1323
         env:
@@ -36,7 +36,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: bot-credentials
-                key: cloudformation_url
+                key: gobble_cloudformation_url
 
           - name: GITHUB_TOKEN
             valueFrom:
@@ -92,5 +92,20 @@ spec:
                 name: bot-credentials
                 key: slack_token
 
+          - name: BUGSNAG_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: bot-credentials
+                key: bugsnag_api_key
+
           - name: REDIS_URL
             value: deploybot-service:6379
+
+          - name: APP_HOME
+            valueFrom:
+              secretKeyRef:
+                name: bot-credentials
+                key: app_home
+
+          - name: PORT
+            value: "1323"
